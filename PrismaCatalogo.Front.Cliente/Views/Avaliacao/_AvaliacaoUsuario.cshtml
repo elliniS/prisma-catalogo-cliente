@@ -1,0 +1,217 @@
+﻿@model PrismaCatalogo.Front.Cliente.Models.AvaliacaoViewModel
+
+<style>
+
+    .star-rating {
+        direction: rtl;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+        .star-rating input {
+            display: none;
+        }
+
+        .star-rating label {
+            color: #ddd;
+            font-size: 24px;
+            padding: 0 2px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+            .star-rating label:hover,
+            .star-rating label:hover ~ label,
+            .star-rating input:checked ~ label {
+                color: #ffc107;
+            }
+</style>
+
+
+<!-- Rating Modal -->
+@* <div class="modal fade" id="ratingModal" tabindex="-1" aria-labelledby="ratingModalLabel" aria-hidden="true">
+    <div class="modal-dialog"> *@
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ratingModalLabel">Escreva sua avaliação</h5>
+                @* <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> *@
+            </div>
+            <div class="modal-body">
+                <form id="comentarioUsuario" style="max-width: 60vw;">
+                    <input asp-for="@Model.Id" type="hidden" />
+                    <input asp-for="@Model.UsuarioId" type="hidden" />
+                    <input asp-for="@Model.ProdutoId" type="hidden" />
+                    <div class="mb-3">
+                        <label for="rating" class="form-label">Your Rating</label>
+                        <div class="star-rating animated-stars">
+                            <input asp-for="@Model.Nota" type="radio" id="star5" value="5">
+                            <label for="star5" class="bi bi-star-fill"></label>
+                            <input asp-for="@Model.Nota" type="radio" id="star4" value="4">
+                            <label for="star4" class="bi bi-star-fill"></label>
+                            <input asp-for="@Model.Nota" type="radio" id="star3" value="3">
+                            <label for="star3" class="bi bi-star-fill"></label>
+                            <input asp-for="@Model.Nota" type="radio" id="star2" value="2">
+                            <label for="star2" class="bi bi-star-fill"></label>
+                            <input asp-for="@Model.Nota" type="radio" id="star1" value="1">
+                            <label for="star1" class="bi bi-star-fill"></label>
+                        </div>
+                        <input type="hidden" id="rating" name="rating" value="0">
+                    </div>
+                    <div class="mb-3">
+                        @* <label for="review" class="form-label">Your Review</label> *@
+                         @* <textarea class="form-control" id="review" rows="3" required></textarea>  *@
+                        <textarea asp-for="@Model.Mensagem" class="form-control" id="Messagem" rows="3" placeholder="Escreva sua avaliação"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-padrao" data-bs-dismiss="modal" id="btnEnviaAvalicao">Avaliar</button>
+                @if (Model.Id != 0)
+                {
+                    <div class="form-group text-center">
+                        <button id="deletaAvaliacaoUsuario" data-bs-dismiss="modal"class="btn btn-danger">Deletar avaliação</button>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group text-center">
+                        <button id="" class="btn btn-danger" data-bs-dismiss="modal"disabled>Deletar avaliação</button>
+                    </div>
+                }
+            </div>
+
+
+        </div>
+@*     </div>
+</div> *@
+
+
+@* <div id="resposta"></div>
+<form id="comentarioUsuario"  style="max-width: 60vw;">
+    <input asp-for="@Model.Id" type="hidden" />
+    <input asp-for="@Model.UsuarioId" type="hidden" />
+    <input asp-for="@Model.ProdutoId" type="hidden" />
+
+
+    <div class="col-md-3" style="margin: 10px 0; ">
+        <div class="rating-card">
+            <h5 class="mb-1">Avalie:</h5>
+            <div class="star-rating animated-stars">
+                <input asp-for="@Model.Nota" type="radio" id="star5" value="5">
+                <label for="star5" class="bi bi-star-fill"></label>
+                <input asp-for="@Model.Nota" type="radio" id="star4" value="4">
+                <label for="star4" class="bi bi-star-fill"></label>
+                <input asp-for="@Model.Nota" type="radio" id="star3" value="3">
+                <label for="star3" class="bi bi-star-fill"></label>
+                <input asp-for="@Model.Nota" type="radio" id="star2" value="2">
+                <label for="star2" class="bi bi-star-fill"></label>
+                <input asp-for="@Model.Nota" type="radio" id="star1" value="1">
+                <label for="star1" class="bi bi-star-fill"></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6" style="display: flex; align-items: flex-end;">
+        <textarea asp-for="@Model.Mensagem" class="form-control" id="Messagem" rows="3" placeholder="Escreva sua avaliação"></textarea>
+
+        <div>
+            <div class="form-group text-center">
+                <input type="submit" value="Enviar avaliação" class="btn btn-padrao" />
+            </div>
+
+            @if (Model.Id != 0)
+            {
+                <div class="form-group text-center">
+                    <button id="deletaAvaliacao" class="btn btn-danger">Deletar avaliação</button>
+                </div>
+            }
+            else
+            {
+                <div class="form-group text-center">
+                    <button id="" class="btn btn-danger" disabled>Deletar avaliação</button>
+                </div>
+            }
+        </div>
+    </div>
+  
+
+</form> *@
+
+
+
+
+<script>
+    document.querySelectorAll('.star-rating:not(.readonly) label').forEach(star => {
+        star.addEventListener('click', function () {
+            this.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 200);
+        });
+    });
+
+
+    $(document).on("click", "#btnEnviaAvalicao", function () {
+        //alert("wssss")
+         $("#comentarioUsuario").submit();
+    });
+
+    $("#comentarioUsuario").submit(function (event) {
+        //alert('dddddd')
+
+        event.preventDefault();
+
+        $.ajax({
+            type: "POST",
+            url: '@Html.Raw(@Url.Action("Post", "Avaliacao"))',
+            data: $(this).serialize(),
+            success: function (response) {
+                $.ajax({
+                    type: "GET",
+                    url: '@Html.Raw(@Url.Action("ObterAvaliacoes", "Avaliacao"))' + "?produtoId=" + '@Model.ProdutoId',
+                    success: function (data) {
+                        $("#lista-avaliacoes").html(data); // Atualiza a lista de avaliações
+                       // $("#resposta").html("<div class='alert alert-success'>Avaliação deletada com sucesso!</div>");
+                    }
+                })
+            },
+            error: function (xhr, status, error) {
+                $("#resposta").html("<div class='alert alert-danger'>Erro ao enviar avaliação</div>");
+            }
+        });
+
+    });
+
+    @if (Model.Id != 0)
+    {
+        <text>
+                $("#deletaAvaliacaoUsuario").click(function (e) {
+                    e.preventDefault();
+
+                $.ajax({
+                    type: "POST",
+                url: '@Html.Raw(@Url.Action("Delete", "Avaliacao"))',
+                data: {
+                    id: '@Model.Id'
+                            },
+                success: function (response) {
+                    $.ajax({
+                        type: "GET",
+                        url: '@Html.Raw(@Url.Action("ObterAvaliacoes", "Avaliacao"))' + "?produtoId=" + '@Model.ProdutoId',
+                        success: function (data) {
+                            $("#lista-avaliacoes").html(data); // Atualiza a lista de avaliações
+                            $("#resposta").html("<div class='alert alert-success'>Avaliação deletada com sucesso!</div>");
+                        }
+                    })
+
+                },
+                error: function (xhr, status, error) {
+                    $("#resposta").html("<div class='alert alert-danger'>Erro ao enviar avaliação</div>")
+                }
+                        })
+                    });
+        </text>
+    }
+
+</script>

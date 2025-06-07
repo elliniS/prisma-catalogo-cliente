@@ -1,0 +1,121 @@
+﻿@model PrismaCatalogo.Front.Cliente.Models.ProdutoDetalheViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+<div>
+    <form id="formTrocaProduto" asp-action="SelecionaFilho" method="post">
+        <input type="hidden" name="produtoId" asp-for="Id"/> 
+
+        <div class="produto-resumo" @*  style=" display: flex;" *@>
+            <div class="carousel-produto">
+                <partial name="_Carousel" for="@Model.Fotos" />
+            </div>
+            <div class="produto-infos" @* style="width:100%; display: flex; fleX-direction:column; align-items:flex-start;" *@>
+                <div class="produto-infos-1">
+                    <h1>@Model.Nome</h1>
+                </div>
+                <div>
+                    <h5>Preço: @Model.Preço</h5>
+                </div>
+
+                <div class="produto-infos-2">
+                    <div class="color-picker" @* style="margin-top: 114px;" *@>
+                        <div>Cores:</div>
+                        @foreach (var cor in ViewBag.ProdutoCores)
+                        {
+                            <div class="color-view @(Model.CorId == cor.Id ? "color-view-active" : "")">
+                                <input  type="radio" class="btn-check" name="corId" id="cor_@(cor.Id)" value="@(cor.Id)" autocomplete="off" @(cor.Id == Model.CorId ? "checked" : "" )>
+                                <label class="rounded-circle" style="@(cor.FotoBytes != null ? "background-image: url('" + cor.FotoBytes + "'" : "background-color:" + cor.CodigoHexadecimal)" for="cor_@(cor.Id)"></label>
+                            </div>
+                        }
+                    </div>
+                    <div class="size-picker">
+                        @* <label class="control-label"> Tamanho</label>
+                        <select class="form-select" id="tamanhoSelect" name="tamanhoId" asp-items="ViewBag.ProdutoTamanhos">
+                            <option selected></option>
+                        </select> *@
+                        <div>Tamanhos:</div>
+                        @foreach (var tamanho in ViewBag.ProdutoTamanhos)
+                        {
+                            <button class="btn-sm size-view btn @(Model.Tamanhos.Any(t => t.Id == tamanho.Id) ? "" : "linha btn-dark disabled")  @(Model.TamanhoId == tamanho.Id ? "btn-dark" : "btn-outline-dark")">
+                            
+                                @* <div class="linha"></div> *@
+                                <input type="radio" class="btn-check" name="tamanhoId" id="tamanho_@(tamanho.Id)" value="@(tamanho.Id)" autocomplete="off" @(tamanho.Id == Model.TamanhoId ? "checked" : "")>
+                                <label class="" for="tamanho_@(tamanho.Id)">@tamanho.Nome</label>
+
+                               @*  <svg viewBox="0 0 100 100" class="cross-line">
+                                    <line x1="0" y1="0" x2="100" y2="100" stroke="black" stroke-width="2" />
+                                </svg> *@
+                            </button>
+                        }
+                    </div>
+
+                    <div>
+                        <p>Estoque: @Model.Estoque</p>
+                    </div>
+                </div>
+                
+                <div class="produto-infos-3" @* style="margin-top: 30px;" *@>
+                    <div>
+                        <div class="fs-6"><h6>Descrição:</h6> @Model.Descricao</div>
+                    </div>
+
+                    <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div > @Model.Observacao </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+    <div id="avaliacao-usuario" style="margin:15px 0"></div>
+
+    <div id="lista-avaliacoes"></div>
+    <a class="text-center" asp-controller="Home" asp-action="Index">Voltar para os produtos</a>
+</div>
+
+
+
+<script>
+    $(document).ready(function () { 
+        $("input[name='corId']").click(function () {
+            $("select option").prop("selected", false);
+            $("#formTrocaProduto").submit();
+        });
+
+        $("input[name='tamanhoId']").click(function () {
+            $("select option").prop("selected", false);
+            $("#formTrocaProduto").submit();
+        });
+        // $("#tamanhoSelect").change(function () {
+        //     $("#formTrocaProduto").submit();
+        // });
+
+        $.ajax({
+            type: "GET",
+            url: '@Html.Raw(@Url.Action("ObterAvaliacoes", "Avaliacao", new { produtoId = Model.Id }))',
+            success: function (data) {
+                $("#lista-avaliacoes").html(data); // Atualiza a lista de avaliações
+            }
+        });
+
+
+        @* @if (User.FindFirst("Id") != null)
+        {
+            <text>
+                $.ajax({
+                    type: "GET",
+                        url: '@Html.Raw(@Url.Action("ObterAvaliacaoUsuario", "Avaliacao", new { produtoId = Model.Id, usuarioId = @User.FindFirst("Id")?.Value.Trim() }))',
+                    success: function (resultado) {
+                        $("#avaliacao-usuario").html(resultado);
+                    }
+                });
+            </text>
+        }*@
+ 
+    });
+</script>

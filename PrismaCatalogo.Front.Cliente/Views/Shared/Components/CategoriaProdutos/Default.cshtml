@@ -1,0 +1,9 @@
+﻿@model IEnumerable<ProdutoViewModel>
+
+
+@foreach (var produto in Model)
+{
+    <partial name="_ProdutoResumo" for="@produto" />
+}
+   
+
