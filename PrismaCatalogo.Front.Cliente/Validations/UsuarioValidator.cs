@@ -18,6 +18,10 @@ namespace PrismaCatalogo.Validations
             RuleFor(x => x.Senha)
                 .NotEmpty()
                 .WithMessage("Informe uma senha para o usuario!");
+
+            RuleFor(x => x.SenhaConfirma)
+                .Equal(y => y.Senha)
+                .WithMessage("As senhas estão diferentes");
         }
     }
 }

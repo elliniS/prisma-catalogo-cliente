@@ -32,6 +32,11 @@
                     <span asp-validation-for="Senha"  class="text-danger"></span>
                 </div>
 
+                <div class="form-group">
+                    <label asp-for="SenhaConfirma" class="control-label"></label>
+                    <input asp-for="SenhaConfirma" type="password" class="form-control" />
+                    <span asp-validation-for="SenhaConfirma" class="text-danger"></span>
+                </div>
                 <div class="form-group text-center">
                     <input type="submit" value="Criar" class="btn btn-padrao" />
                 </div>
