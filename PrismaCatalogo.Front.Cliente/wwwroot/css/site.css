@@ -240,6 +240,17 @@ body {
     border: 2px solid black;
 }
 */
+
+.products-section {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+    .products-section div {
+        width: 400px;
+        margin: 5px;
+    }
+
 @media (max-width: 768px) { /* Quando a tela for menor que 768px */
     .produto-resumo {
         display: flex;
@@ -271,5 +282,11 @@ body {
     .carousel {
         height: 90vw;
         width: 90vw;
+    }
+
+    .products-section {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 }

@@ -20,11 +20,24 @@ namespace PrismaCatalogo.Front.Cliente.Controllers
             _categoriaService = categoriaService;
         }
 
-        public async Task<IActionResult> Index()
-        { 
-            var categorias = await _categoriaService.GetAll();
+        public async Task<IActionResult> Index([Bind("Pesquisa")] HomeViewModel homeViewModel)
+        {
+            var home = new HomeViewModel();
 
-            return View(categorias);
+            if (homeViewModel.Pesquisa != null && homeViewModel.Pesquisa.Trim() != "")
+            {
+                var produtos = await _produtoService.FindByName(homeViewModel.Pesquisa.Trim());
+
+                home.ProdutoViewModels = produtos;
+            }
+            else
+            {
+                var categorias = await _categoriaService.GetAll();
+
+                home.CategoriasViewModels = categorias ;
+            }
+
+            return View(home);
         }
 
         public IActionResult Privacy()

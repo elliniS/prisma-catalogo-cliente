@@ -44,7 +44,7 @@ namespace PrismaCatalogo.Front.Cliente.Services
             }
         }
 
-        public async Task<CategoriaViewModel> FindByName(string name)
+        public async Task<IEnumerable<CategoriaViewModel>> FindByName(string name)
         {
             CategoriaViewModel categoria = null;
 
@@ -52,7 +52,7 @@ namespace PrismaCatalogo.Front.Cliente.Services
 
             using (var response = await client.GetAsync(apiEndpoint + name))
             {
-                return await CapituraRetorno<CategoriaViewModel>(response);
+                return await CapituraRetorno<IEnumerable<CategoriaViewModel>>(response);
             }
         }
 

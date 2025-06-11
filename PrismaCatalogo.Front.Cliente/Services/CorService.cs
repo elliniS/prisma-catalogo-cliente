@@ -42,13 +42,13 @@ namespace PrismaCatalogo.Front.Cliente.Services
             }
         }
 
-        public async Task<CorViewModel> FindByName(string name)
+        public async Task<IEnumerable<CorViewModel>> FindByName(string name)
         {
             var client = _clientFactory.CreateClient("Api");
 
             using (var response = await client.GetAsync(apiEndpoint + name))
             {
-                return await CapituraRetorno<CorViewModel>(response);
+                return await CapituraRetorno<IEnumerable<CorViewModel>>(response);
             }
         }
 
