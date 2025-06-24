@@ -93,6 +93,36 @@ namespace PrismaCatalogo.Front.Cliente.Services
             }
         }
 
+        public async Task<ReenviaSenhaViewModel> CodigoReenviaSenha(UsuarioLoginViewModel usuarioViewModel)
+        {
+            var client = _clientFactory.CreateClient("Api");
+
+            using (var response = await client.PostAsJsonAsync(apiEndpoint + "EnviaCodigoRedefiniSenha", usuarioViewModel))
+            {
+                return await CapituraRetorno<ReenviaSenhaViewModel>(response);
+            }
+        }
+
+        public async Task<ReenviaSenhaViewModel> VerificaCodigo(ReenviaSenhaViewModel reenviaSenhaViewModel)
+        {
+            var client = _clientFactory.CreateClient("Api");
+
+            using (var response = await client.PostAsJsonAsync(apiEndpoint + "VerificaCodigo", reenviaSenhaViewModel))
+            {
+                return await CapituraRetorno<ReenviaSenhaViewModel>(response);
+            }
+        }
+
+        public async Task<ReenviaSenhaViewModel> AlteraSenha(ReenviaSenhaViewModel reenviaSenhaViewModel)
+        {
+            var client = _clientFactory.CreateClient("Api");
+
+            using (var response = await client.PostAsJsonAsync(apiEndpoint + "AlteraSenha", reenviaSenhaViewModel))
+            {
+                return await CapituraRetorno<ReenviaSenhaViewModel>(response);
+            }
+        }
+
 
         private async Task<T> CapituraRetorno<T>(HttpResponseMessage response)
         {

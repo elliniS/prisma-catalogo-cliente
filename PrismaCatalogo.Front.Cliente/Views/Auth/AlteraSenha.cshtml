@@ -1,0 +1,40 @@
+﻿@model PrismaCatalogo.Front.Cliente.Models.ReenviaSenhaViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="flex-md-column">
+    <div class="text-center">
+        <h1 class="display-4">Login</h1>
+    </div>
+
+    @if (ViewBag.Fail != null)
+    {
+        <div class="alert alert-danger">Usuário ou senha incorretos!</div>
+    }
+
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <form asp-action="AlteraSenhaPost">
+                <input type="hidden" asp-for="UsuarioId" />
+                <input type="hidden" asp-for="Codigo" />
+
+
+                <div data-mdb-input-init class="form-outline mb-4">
+                    <label asp-for="Senha" class="form-label"></label>
+                    <input asp-for="Senha" type="password" class="form-control" />
+                </div>
+                <div data-mdb-input-init class="form-outline mb-4">
+                    <label asp-for="ConfirmaSenha" class="form-label"></label>
+                    <input asp-for="ConfirmaSenha" type="password" class="form-control" />
+                </div>
+
+                <div class="form-group text-center">
+                    <button data-mdb-ripple-init type="submit" class="btn btn-padrao">Alterar Senha</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

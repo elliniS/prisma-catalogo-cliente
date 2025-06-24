@@ -1,0 +1,29 @@
+﻿@model PrismaCatalogo.Front.Cliente.Models.ReenviaSenhaViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="flex-md-column">
+    <div class="text-center">
+        <h1 class="display-4">Digite o codigo redefinição de senha</h1>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <form asp-action="ConfirmaCodigo">
+                <input type="hidden" asp-for="UsuarioId" />
+
+                <div data-mdb-input-init class="form-outline mb-4">
+                    <label asp-for="Codigo" class="form-label"></label>
+                    <input asp-for="Codigo" class="form-control" />
+                </div>
+
+                <div class="form-group text-center">
+                    <button data-mdb-ripple-init type="submit" class="btn btn-padrao">Enviar</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

@@ -111,6 +111,75 @@ public class AuthController : Controller
     }
 
 
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> EnviaCodigoSenha([Bind("NomeUsuario")] UsuarioLoginViewModel usuarioLoginView)
+    {
+        try
+        {
+           var u = await _usuarioService.CodigoReenviaSenha(usuarioLoginView);
+
+            return RedirectToAction("ConfirmaCodigo", new { usuarioId = u.UsuarioId });
+
+
+        }
+        catch (Exception e) {
+            ViewData["mensagemError"] = e.Message;
+            return RedirectToRoute("Auth.Login");
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> ConfirmaCodigo(int usuarioId)
+    {
+        var c = new ReenviaSenhaViewModel() { 
+            UsuarioId = usuarioId 
+        };
+
+        return View(c);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> ConfirmaCodigo([Bind("UsuarioId,Codigo")] ReenviaSenhaViewModel reenviaSenhaViewModel)
+    {
+        try
+        {
+            var u = await _usuarioService.VerificaCodigo(reenviaSenhaViewModel);
+
+            u.Codigo = reenviaSenhaViewModel.Codigo;
+
+            return RedirectToAction("AlteraSenha", u);
+        }
+        catch (Exception e)
+        {
+            ViewData["mensagemError"] = e.Message;
+            return View(reenviaSenhaViewModel);
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> AlteraSenha( ReenviaSenhaViewModel reenviaSenhaViewModel)
+    {
+        return View(reenviaSenhaViewModel);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> AlteraSenhaPost([Bind("UsuarioId,Codigo,Senha,ConfirmaSenha")] ReenviaSenhaViewModel reenviaSenhaViewModel)
+    {
+        try
+        {
+            var u = await _usuarioService.AlteraSenha(reenviaSenhaViewModel);
+
+            return RedirectToRoute("Auth.Login");
+        }
+        catch (Exception e)
+        {
+            ViewData["mensagemError"] = e.Message;
+            return RedirectToRoute("Auth.Login");
+        }
+    }
 
     public async Task<IActionResult> Logout()
     {
