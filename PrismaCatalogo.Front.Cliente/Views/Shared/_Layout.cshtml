@@ -236,9 +236,10 @@
 
 
 
-                <div>
+                <div style="display:flex;">
                     @if (User.Identity.IsAuthenticated)
                     {
+                        <a class="nav-link text-light" asp-area="" asp-route="Auth.MinhaConta">Minha Conta</a>
                         <a class="nav-link text-light" asp-area="" asp-route="Auth.Logout">Logout</a>
 
                     }

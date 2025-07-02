@@ -32,9 +32,9 @@ namespace PrismaCatalogo.Front.Cliente.Controllers
             }
             else
             {
-                var categorias = await _categoriaService.GetAll();
+                var categorias = (await _categoriaService.GetAll());
 
-                home.CategoriasViewModels = categorias ;
+                home.CategoriasViewModels = categorias.Where(c => c.FgTelaInicial);
             }
 
             return View(home);

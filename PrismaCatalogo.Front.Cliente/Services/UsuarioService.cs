@@ -67,7 +67,7 @@ namespace PrismaCatalogo.Front.Cliente.Services
         {
             var client = _clientFactory.CreateClient("Api");
 
-            using (var response = await client.PutAsJsonAsync(apiEndpoint + id, usuarioViewModel))
+            using (var response = await client.PutAsJsonAsync(apiEndpoint + "PutMySelf/" + id, usuarioViewModel))
             {
                 return await CapituraRetorno<UsuarioViewModel>(response);
             }

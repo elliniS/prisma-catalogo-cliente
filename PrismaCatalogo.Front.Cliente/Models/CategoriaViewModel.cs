@@ -12,6 +12,7 @@ namespace PrismaCatalogo.Front.Cliente.Models
         public int? IdPai { get; set; }
         [Display(Name = "Categorias filhas")]
         public ICollection<CategoriaViewModel>? CategoriasFilhas { get; set; }
+        public bool FgTelaInicial { get; set; }
 
         public ICollection<ProdutoViewModel>? Produtos { get; set; }
 

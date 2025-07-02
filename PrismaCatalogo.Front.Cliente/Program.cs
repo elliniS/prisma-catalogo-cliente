@@ -61,10 +61,13 @@ app.MapControllerRoute(
     pattern: "login",
     defaults: new { controller = "Auth", action = "Login" });
 app.MapControllerRoute(
+    name: "Auth.MinhaConta",
+    pattern: "minhaconta",
+    defaults: new { controller = "Auth", action = "MinhaConta" });
+app.MapControllerRoute(
     name: "Auth.Logout",
     pattern: "logout",
     defaults: new { controller = "Auth", action = "Logout" });
-
 app.MapControllerRoute(
     name: "auth.Unauthorized",
     pattern: "unauthorized",

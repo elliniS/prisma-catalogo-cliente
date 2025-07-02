@@ -9,6 +9,7 @@ namespace PrismaCatalogo.Front.Cliente.Models
         public string? Nome { get; set; }
         [Display(Name = "Nome de Usuario")]
         public string? NomeUsuario { get; set; }
+        public string Email { get; set; }
         public string? Senha { get; set; }
         [Display(Name = "Confirme sua Senha")]
         public string? SenhaConfirma { get; set; }

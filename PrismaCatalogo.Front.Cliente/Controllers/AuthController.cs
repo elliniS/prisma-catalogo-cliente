@@ -7,6 +7,7 @@ using PrismaCatalogo.Front.Cliente.Services.Interfaces;
 using System;
 using PrismaCatalogo.Validations;
 using NuGet.Packaging.Licenses;
+using FluentValidation.AspNetCore;
 
 namespace AuthFacil.Mvc.Controllers;
 
@@ -54,6 +55,51 @@ public class AuthController : Controller
         return View();
     }
 
+    // GET: Funcionario/Usuarios/Edit/5
+    public async Task<IActionResult> MinhaConta()
+    {
+        try
+        {
+            var usuario = await _usuarioService.FindById(Convert.ToInt32(User.FindFirst("Id")?.Value.Trim()));
+
+            if (usuario == null)
+            {
+                throw new Exception();
+            }
+            return View(usuario);
+        }
+        catch
+        {
+            ViewData["mensagemError"] = "Erro ao acessar tela de edição!";
+            return RedirectToAction("Index", "Home");
+        }
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> MinhaConta([Bind("Nome,NomeUsuario,Email,Senha")] UsuarioViewModel usuarioViewModel)
+    {
+        UsuarioUpdateValidator validations = new UsuarioUpdateValidator();
+        var resul = validations.Validate(usuarioViewModel);
+
+        if (resul.IsValid)
+        {
+            try
+            {
+                var re = await _usuarioService.Update(Convert.ToInt32(User.FindFirst("Id")?.Value.Trim()), usuarioViewModel);
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception e)
+            {
+                ViewData["mensagemError"] = e.Message;
+            }
+        }
+
+        ModelState.Clear();
+        resul.AddToModelState(ModelState);
+
+        return View(usuarioViewModel);
+    }
 
     public IActionResult Login()
     {
