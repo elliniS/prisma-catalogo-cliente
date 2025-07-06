@@ -15,7 +15,7 @@ namespace PrismaCatalogo.Front.Cliente.Models
 
         public ProdutoAvaliacoesViewModel(int produtoId, IEnumerable<AvaliacaoViewModel> avaliacoes)
         {
-            if (avaliacoes == null)
+            if (avaliacoes == null || avaliacoes.Count() == 0)
             {
                 ProdutoId = produtoId;
                 QuantTotal = 0;

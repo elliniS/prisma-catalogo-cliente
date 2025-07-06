@@ -26,7 +26,7 @@ namespace PrismaCatalogo.Front.Cliente.Controllers
 
             if (homeViewModel.Pesquisa != null && homeViewModel.Pesquisa.Trim() != "")
             {
-                var produtos = await _produtoService.FindByName(homeViewModel.Pesquisa.Trim());
+                var produtos = (await _produtoService.FindByName(homeViewModel.Pesquisa.Trim())).Where(p => p.Ativo);
 
                 home.ProdutoViewModels = produtos;
             }

@@ -45,7 +45,7 @@ namespace PrismaCatalogo.Front.Cliente.Controllers
 
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> SelecionaFilho(int produtoId, int? corId, int? tamanhoId)
         {
             var produto = await _produtoService.FindById(produtoId);

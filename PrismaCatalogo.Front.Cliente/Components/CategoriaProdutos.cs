@@ -15,8 +15,7 @@ namespace PrismaCatalogo.Front.Cliente.Components
 
         public async Task<IViewComponentResult> InvokeAsync(int categoriaId)
         {
-            var produtos = await _produtoService.GetByCategoria(categoriaId);
-
+            var produtos = (await _produtoService.GetByCategoria(categoriaId)).Where(p => p.Ativo);
 
             return View(produtos);
         }

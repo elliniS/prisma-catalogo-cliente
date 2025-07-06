@@ -19,7 +19,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient<AuthTokenHandler>();
 
 builder.Services.AddHttpClient("Api", c => c.BaseAddress = new Uri(
-    builder.Configuration["ServiceUri:Api"])
+    builder.Configuration["PRISMA_API"])
 ).AddHttpMessageHandler<AuthTokenHandler>();
 
 builder.Services.AddScoped<ITamanhoService, TamanhoService>();

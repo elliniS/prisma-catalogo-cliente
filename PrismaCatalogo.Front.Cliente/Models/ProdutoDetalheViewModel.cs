@@ -75,7 +75,7 @@ namespace PrismaCatalogo.Front.Cliente.Models
                 Descricao = produtoView.Descricao;
                 Observacao = produtoView.Observacao;
                 Ativo = produtoView.Ativo;
-                Fotos = produtoView.Fotos;
+                Fotos = produtoFilho != null && produtoFilho.Fotos != null && produtoFilho.Fotos.Count > 0 ? produtoFilho.Fotos : produtoView.Fotos;
                 Preço = produtoFilho != null && produtoFilho.Preco != null ? "R$" + produtoFilho.Preco : "Não informado";
                 Estoque = produtoView.ProdutosFilhos != null && produtoFilho?.QuantEstoque != null ? produtoFilho.QuantEstoque.ToString() : "Não informado";
                 CorId = corId;
@@ -88,13 +88,15 @@ namespace PrismaCatalogo.Front.Cliente.Models
             else if (corId != null)
             {
                 var produtosFilhos = produtoView.ProdutosFilhos.Where(p => p.Cor.Id == corId).ToList();
-
+                var fotosFilhos = produtosFilhos?.SelectMany(p => p.Fotos).ToList();
+                
+               
                 Id = produtoView.Id;
                 Nome = produtoView.Nome;
                 Descricao = produtoView.Descricao;
                 Observacao = produtoView.Observacao;
                 Ativo = produtoView.Ativo;
-                Fotos = produtoView.Fotos;
+                Fotos = fotosFilhos != null && fotosFilhos.Count() > 0 ? fotosFilhos : produtoView.Fotos;
                 CorId = corId;
                 Preço = produtosFilhos != null && produtosFilhos.Where(p => p.Preco != null).Select(p => p.Preco).Order().FirstOrDefault() != null ? "R$" + produtosFilhos.Where(p => p.Preco != null).Select(p => p.Preco).Order().FirstOrDefault() : "Não informado";
                 Estoque = produtosFilhos != null ? produtosFilhos.Where(p => p.QuantEstoque != null).Sum(p => p.QuantEstoque).ToString() : "Não informado";
