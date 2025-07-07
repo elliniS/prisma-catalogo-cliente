@@ -8,14 +8,16 @@
             {
                 <div class="carousel-item  @(foto.FgPrincipal == true ? "active" : "")" style="height: 100%;">
                     @* <img class="rounded" src="data:image/png;base64,@Html.DisplayFor(modelItem => foto.FotoBytes)" class="d-block" alt="..."> *@
-                    <img class="rounded" src="@foto.Caminho" class="d-block" alt="...">
+                    <img class="rounded d-block" src="@foto.Caminho" alt="...">
                 </div>
             }
 
         }
         else
         {
-            <img src="~/images/SemImagem.png" />
+            <div class="carousel-item active" style="height: 100%;">
+                <img class="rounded d-block" src="~/images/SemImagem.png" alt="...">
+            </div>
         }
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselFotos" data-bs-slide="prev">

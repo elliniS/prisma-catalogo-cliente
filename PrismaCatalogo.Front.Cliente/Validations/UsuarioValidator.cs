@@ -15,6 +15,10 @@ namespace PrismaCatalogo.Validations
                 .NotEmpty()
                 .WithMessage("Informe um nome para o usuario!");
 
+            RuleFor(x => x.Email)
+                .NotEmpty()
+                .WithMessage("Informe um email para o usuario!");
+
             RuleFor(x => x.Senha)
                 .NotEmpty()
                 .WithMessage("Informe uma senha para o usuario!");

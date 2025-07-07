@@ -31,7 +31,7 @@ public class AuthController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Nome,NomeUsuario,Senha")] UsuarioViewModel usuario)
+    public async Task<IActionResult> Create([Bind("Id,Nome,NomeUsuario,Email,Senha,SenhaConfirma")] UsuarioViewModel usuario)
     {
         usuario.UsuarioTipo = PrismaCatalogo.Enuns.EnumUsuarioTipo.Cliente;
         UsuarioValidator validations = new UsuarioValidator();
@@ -77,7 +77,7 @@ public class AuthController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> MinhaConta([Bind("Nome,NomeUsuario,Email,Senha")] UsuarioViewModel usuarioViewModel)
+    public async Task<IActionResult> MinhaConta([Bind("Nome,NomeUsuario,Email,Senha,SenhaConfirma")] UsuarioViewModel usuarioViewModel)
     {
         UsuarioUpdateValidator validations = new UsuarioUpdateValidator();
         var resul = validations.Validate(usuarioViewModel);
